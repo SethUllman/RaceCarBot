@@ -7,6 +7,8 @@ class Track:
         self.filename = ""
         self.row = 0
         self.col = 0
+        self.stateSpace = 0
+        self.startPos = []
         self.track = None     # holds cell values in the track as a 2D numpy array
 
     # populates cells into Track
@@ -26,6 +28,8 @@ class Track:
             line = file.readline().replace("\n", "")  # read row of cell values
             for col in range(self.col):
                 self.track[row][col] = line[col]
+                if self.track[row][col] in [".", "S"]: self.stateSpace += 1
+                if self.track[row][col] == "S": self.startPos.append([row, col])
 
     def getCell(self, row, col):
         return(self.track[row][col])
@@ -37,6 +41,27 @@ class Track:
     def setTrack(self, track):
         self.track = track
         return
+    
+    def detectWall(self, x0, y0, x1, y1):
+        points = []
+        dx = abs(x1 - x0)
+        dy = abs(y1 - y0)
+        sx = 1 if x0 < x1 else -1
+        sy = 1 if y0 < y1 else -1
+        err = dx - dy
+
+        while x0 != x1 or y0 != y1:
+            points.append((x0, y0))
+            e2 = 2 * err
+            if e2 > -dy:
+                err -= dy
+                x0 += sx
+            if e2 < dx:
+                err += dx
+                y0 += sy
+
+        points.append((x0, y0))
+        return points
 
     # prints track as one string
     def __str__(self):

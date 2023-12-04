@@ -26,22 +26,20 @@ class Car:
         return(self.velocity)
 
     def updateVelocity(self, vx, vy):
-        self.prev_velocity = self.velocity
         self.velocity = [vx, vy]
-        return
 
     def calcVelocity(self):
-        vx = self.position[0] - self.prev_position[0]
-        vy = self.position[1] - self.prev_position[1]
+        vx = self.velocity[0] + self.acceleration[0]
+        if vx > 5 or vx < -5: vx = self.prev_velocity[0]
+        vy = self.velocity[1] + self.acceleration[1]
+        if vy > 5 or vy < -5: vy = self.prev_velocity[1]
         self.updateVelocity(vx, vy)
-        return
 
     # ---------------- Acceleration ----------------
     def getAcceleration(self):
         return(self.acceleration)
 
     def updateAcceleration(self, ax, ay):
-        self.prev_acceleration = self.acceleration
         self.acceleration = [ax, ay]
         return
 
