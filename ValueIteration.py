@@ -1,3 +1,4 @@
+from types import new_class
 import numpy as np
 import pandas as pd
 import random
@@ -12,28 +13,32 @@ class ValueIteration:
             indexTuples = [(row, col, x, y) for row in range(0, self.track.row) for col in range(0, self.track.col) for x in range(-5, 6) for y in range(-5, 6)]
             labels = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 0), (0, 1), (1, -1), (1, 0), (1, 1)]
             self.values = pd.DataFrame(index=indexTuples, columns=labels, dtype=float)
-            self.values.fillna(0, inplace=True)
+            self.values.fillna('inf', inplace=True)
 
     def valueIteration(self, bellmanError, discount):
         delta = float('inf')
 
         while delta > bellmanError:
             delta = 0
-            max_value = float('-inf')
+            min_value = float('inf')
 
             states = self.values.index.tolist()
             actions = self.values.columns.tolist()
             for state in states:
+                v = bestValue(state)
+                # v = self.values.at[state, action]
 
                 for action in actions:
-                    v = self.values.at[state, action]
-                    value = reward(state, action) + discount*getNextState(state, action) # needs to be a value
+                    value = reward(state, action) + discount*bestValue(getNextState(state, action))
                     
-                    if value > max_value:
-                        max_value = value
+                    if value < min_value:
+                        min_value = value
 
+                V = min_value
+                if delta < abs(v - V):
+                    delta = abs(v - V)
 
-                # V = 
+        return self.values
 
         # δ = float('inf')  # Initialize delta to positive infinity
 
@@ -57,3 +62,12 @@ class ValueIteration:
         
         def getNextState(self, state, action):
             return
+        
+        def bestValue(self, state):
+            value = 'inf'
+            actions = self.values.columns.tolist()
+            for action in actions:
+                new_value = self.values.at[state, action]
+                if new_value < value:
+                    value = new_value
+            return value
