@@ -60,11 +60,11 @@ class ValueIteration:
                     if delta < abs(v - V):
                         delta = round(abs(v - V), 4)
 
-                    print("Delta:", delta, "\tV: ", V)
+                    # print("Delta:", delta, "\tV: ", V)
             count+=1
 
             print("Count: ",count)
-            self.values.to_csv('./values_tables/values_table_L_' + str(bellmanError) + str(discount) + '.csv')
+            self.values.to_csv('./values_tables/R_tables/values_table_RC_' + str(bellmanError) + '_' +str(discount) + '.csv')
 
         return self.values
 

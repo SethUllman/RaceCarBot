@@ -17,8 +17,8 @@ class Agent:
     def valueIteration(self, bellmanError, discount):
         VI = ValueIteration(self.car, self.track, self.memory)
         valuesTable = VI.value_iteration(bellmanError, discount)
-        valuesTable.to_csv('./values_tables/values_table_L_' + str(bellmanError) + str(discount) + '.csv')
-        print("done " + str(bellmanError) + str(discount))
+        valuesTable.to_csv('./values_tables/R_tables/values_table_RC_' + str(bellmanError) + '_' + str(discount) + '.csv')
+        print("done " + str(bellmanError) + ' ' +str(discount))
 
 
     def qLearning(self):
