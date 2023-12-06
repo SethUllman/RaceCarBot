@@ -3,11 +3,15 @@ import pandas as pd
 import random
 
 class QLearning:
-  def __init__(self, car, track, memory = None):
+  def __init__(self, car, track, alpha, y, epsilon, memory = None):
+    # initialize starting values
     self.actionSpace = 9
     self.stateSpace = track.stateSpace * 11 * 11
     self.car = car
     self.track = track
+
+    # if a memory DataFrame was provided use that as the Q-Table
+    # otherwise created a new DataFrame
     if memory is not None and not memory.empty:
       self.Q = memory     #Q-Table
     else:
@@ -15,36 +19,48 @@ class QLearning:
       labels = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 0), (0, 1), (1, -1), (1, 0), (1, 1)]
       self.Q = pd.DataFrame(index=indexTuples, columns=labels, dtype=float)
       self.Q.fillna(0, inplace=True)
-    self.alpha = 0.1    #learning rate
-    self.y = 0.9        #discount rate
-    self.epsilon = 0.5        #exploration rate, commonly 0.1-0.5
+
+    # tunable parameters
+    self.alpha = alpha      #learning rate
+    self.y = y              #discount rate
+    self.epsilon = epsilon  #exploration rate, commonly 0.1-0.5
     
 
+  # The Q-Learning Algorithm, returns a Q-Table
   def q_learning(self):
+    # move the car to the Starting Line
     self.car.updatePosition(self.track.startPos[0][0], self.track.startPos[0][1])
-    episodes = 100
+
+    # set the number of iterations
+    episodes = 1000
     for episode in range(episodes):
       
+      # creates the current state as a tuple (x, y, xv, yv)
       state = self.getState(self.car.getPosition())
-      totalReward = 0
       for step in range(500):
+
+        # choose and perform an action, then find values needed for Q-Table update
         action = self.getAction(state)
         nextState, reward = self.takeAction(state, action)
         bestNextAction = self.Q.loc[[nextState]].idxmax(axis=1).values[0]
         currentQValue = self.Q.loc[[state], [action]].values[0][0]
         nextQValue = self.Q.loc[[nextState], [bestNextAction]].values[0][0]
+
+        # update Q-Table
         newQValue = (1 - self.alpha) * currentQValue + self.alpha * (reward + self.y * nextQValue)
-        
         self.Q.loc[[state], [action]] = newQValue
 
     return self.Q
 
+  # returns a state tuple
   def getState(self, pos):
     velocity = self.car.getVelocity()
     state = (pos[0], pos[1], velocity[0], velocity[1])
     integerState = tuple(int(value) for value in state)
     return integerState
 
+  # decides whether to get the best action or a random one using
+  # the tunable parameter epsilon
   def getAction(self, state):
     # Exploration-exploitation trade-off
     if np.random.rand() < self.epsilon:
@@ -56,6 +72,7 @@ class QLearning:
 
     return action
 
+  # creates a random, valid, action
   def getRandAction(self):
     acceleration = self.car.getAcceleration()
     new_x, new_y = 0, 0
@@ -76,39 +93,78 @@ class QLearning:
 
     return (new_x, new_y)
   
+  # exacutes the found action
   def takeAction(self, state, action):
+
+    # actions fails with a probability of 0.2
     if np.random.rand() <= 0.2:
       action = (0, 0)
+
+    # takes the acceleration action on our car and move
     self.car.updateAcceleration(action[0], action[1])
     self.car.calcVelocity()
+    # moveCar returns True or False depending on whether or not a finish
+    # line was reached
     finished = self.moveCar()
     reward = 0
     if finished == 0:
-      reward = 1
+      reward = 0
     else: reward = -1
 
+    # create a new state tuple
     pos = self.car.getPosition()
     velocity = self.car.getVelocity()
     newState = (pos[0], pos[1], velocity[0], velocity[1])
     return newState, reward
 
+  # moves the car using its velocity values
   def moveCar(self):
+
+    # finds the cars target position and creates a list of cells the car
+    # will pass through
     currentPos = self.car.getPosition()
     velocity = self.car.getVelocity()
     newPos = [currentPos[0] + velocity[0], currentPos[1] + velocity[1]]
     path = self.track.detectWall(currentPos[0], currentPos[1], newPos[0], newPos[1])
 
+    # moves through the path one cell at a time stopping if the car hits
+    # a wall or reaches the finish line
     previous = currentPos
     for pos in path:
+      # return True if the car finishes
       if self.track.getCell(pos[0], pos[1]) == "F":
         return True
         
+      # if a wall is hit, update position and velocity
       if self.track.getCell(pos[0], pos[1]) == "#":
         self.car.updatePosition(previous[0], previous[1])
         self.car.updateVelocity(0, 0)
         return False
 
+      previous = pos
+
+    # moves the car to its final position
+    self.car.updatePosition(previous[0], previous[1])
+
     return False
+
+  def drive(self):
+    pos = self.track.startPos[0]
+    self.car.updatePosition(pos[0], pos[1])
+    self.car.updateVelocity(0, 0)
+
+    for i in range(50):
+
+      prevVal = self.track.track[pos[0]][pos[1]]
+      self.track.track[pos[0]][pos[1]] = "C"
+      print(self.track)
+      state = self.getState(pos)
+      action = self.getAction(state)
+      newState, reward = self.takeAction(state, action)
+      self.track.track[pos[0]][pos[1]] = prevVal
+      pos = self.car.getPosition()
+      
+    
 
   
 
