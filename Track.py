@@ -9,6 +9,7 @@ class Track:
         self.col = 0
         self.stateSpace = 0
         self.startPos = []
+        self.finishPos = []
         self.track = None     # holds cell values in the track as a 2D numpy array
 
     # populates cells into Track
@@ -30,6 +31,7 @@ class Track:
                 self.track[row][col] = line[col]
                 if self.track[row][col] in [".", "S"]: self.stateSpace += 1
                 if self.track[row][col] == "S": self.startPos.append([row, col])
+                if self.track[row][col] == "F": self.finishPos.append([row, col])
 
     def getCell(self, row, col):
         return(self.track[row][col])

@@ -20,12 +20,18 @@ class Car:
         self.prev_position = self.position
         self.position = [x, y]
         return
+    
+    def calcPosition(self):
+        x = self.position[0] + self.velocity[0]
+        y = self.position[1] + self.velocity[1]
+        self.updatePosition(x, y)
 
     # ---------------- Velocity ----------------
     def getVelocity(self):
         return(self.velocity)
 
     def updateVelocity(self, vx, vy):
+        self.prev_velocity = self.velocity
         self.velocity = [vx, vy]
 
     def calcVelocity(self):
