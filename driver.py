@@ -11,16 +11,7 @@ def tuneVI():
 
     for bE in bellmanErrors:
         for d in discounts:
-            vIter = Agent("./tracks/R-Track/R-track-full.txt")
+            vIter = Agent("./tracks/W-Track/W-track-full.txt")
             values = vIter.valueIteration(bE, d)
 
 tuneVI()
-
-
-
-
-
-
-
-
-

@@ -64,7 +64,7 @@ class ValueIteration:
             count+=1
 
             print("Count: ",count)
-            self.values.to_csv('./values_tables/R_tables/values_table_RC_' + str(bellmanError) + '_' +str(discount) + '.csv')
+            self.values.to_csv('./values_tables/W_tables/values_table_W_' + str(bellmanError) + '_' +str(discount) + '.csv')
 
         return self.values
 
