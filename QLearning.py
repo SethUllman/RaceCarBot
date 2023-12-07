@@ -35,10 +35,10 @@ class QLearning:
   def q_learning(self):  
 
     # set the number of iterations
-    episodes = 100
+    episodes = 5000
     for episode in range(episodes):
       if(episode % 100 == 0): 
-        print(str(episode))
+        print(str(episode/100) + "/" + str(episodes/100))
         self.Q.to_csv(self.filename)
       start = self.getStartState()
       self.car.updatePosition(start[0], start[1])
