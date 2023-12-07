@@ -22,26 +22,16 @@ class Agent:
 
 
     def qLearning(self):
-        QL = QLearning(self.car, self.track, 0.1, 0.9, 0.5)
-        qtable = QL.q_learning()
-        qtable.to_csv('q_table_full5.csv')
+        # table = pd.read_csv('q_table_L1_min.csv')
         
-        QL = QLearning(self.car, self.track, 0.1, 0.9, 0.4)
-        qtable = QL.q_learning()
-        qtable.to_csv('q_table_full4.csv')
-
         QL = QLearning(self.car, self.track, 0.1, 0.9, 0.3)
+        # QL.drive()
         qtable = QL.q_learning()
-        qtable.to_csv('q_table_full3.csv')
+        return qtable
 
-        QL = QLearning(self.car, self.track, 0.1, 0.9, 0.2)
-        qtable = QL.q_learning()
-        qtable.to_csv('q_table_full2.csv')
-
-        QL = QLearning(self.car, self.track, 0.1, 0.9, 0.1)
-        qtable = QL.q_learning()
-        qtable.to_csv('q_table_full1.csv')
 
 
     def sarsa(self):
-        S = SARSA(self.car, self.track, self.memory)
+        S = SARSA(self.car, self.track, 0.1, 0.9, 0.3)
+        qtable = S.sarsa()
+        return qtable

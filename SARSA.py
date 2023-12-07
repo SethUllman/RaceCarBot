@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import random
 
-class QLearning:
+class SARSA:
   def __init__(self, car, track, alpha, y, epsilon, memory = None):
     # initialize starting values
     self.actionSpace = 9
@@ -30,8 +30,8 @@ class QLearning:
   def getStartState(self):
     return random.choice(self.track.startPos)
 
-  # The Q-Learning Algorithm, returns a Q-Table
-  def q_learning(self):  
+  # The sarsa Algorithm, returns a Q-Table
+  def sarsa(self):  
 
     # set the number of iterations
     episodes = 5000
@@ -55,7 +55,7 @@ class QLearning:
         nextQValue = self.Q.loc[[nextState], [bestNextAction]].values[0][0]
 
         # update Q-Table
-        newQValue = (1 - self.alpha) * currentQValue + self.alpha * (reward + self.y * nextQValue)
+        newQValue = currentQValue + (self.alpha * (reward + (self.y * nextQValue) - currentQValue))
         self.Q.loc[[state], [action]] = newQValue
 
     return self.Q
