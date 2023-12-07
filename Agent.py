@@ -4,6 +4,7 @@ from Car import Car
 from Track import Track
 from ValueIteration import ValueIteration
 from QLearning import QLearning
+from SARSA import SARSA
 
 # ---------------- Agent ----------------
 class Agent:
@@ -21,17 +22,17 @@ class Agent:
         print("done " + str(bellmanError) + ' ' +str(discount))
 
 
-    def qLearning(self):
+    def qLearning(self, filename):
         # table = pd.read_csv('q_table_L1_min.csv')
         
-        QL = QLearning(self.car, self.track, 0.1, 0.9, 0.3)
+        QL = QLearning(self.car, self.track, 0.1, 0.9, 0.3, filename)
         # QL.drive()
         qtable = QL.q_learning()
         return qtable
 
 
 
-    def sarsa(self):
-        S = SARSA(self.car, self.track, 0.1, 0.9, 0.3)
+    def sarsa(self, filename):
+        S = SARSA(self.car, self.track, 0.1, 0.9, 0.3, filename)
         qtable = S.sarsa()
         return qtable

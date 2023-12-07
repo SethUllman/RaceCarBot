@@ -3,12 +3,13 @@ import pandas as pd
 import random
 
 class SARSA:
-  def __init__(self, car, track, alpha, y, epsilon, memory = None):
+  def __init__(self, car, track, alpha, y, epsilon, filename, memory = None):
     # initialize starting values
     self.actionSpace = 9
     self.stateSpace = track.stateSpace * 11 * 11
     self.car = car
     self.track = track
+    self.filename = filename
 
     # if a memory DataFrame was provided use that as the Q-Table
     # otherwise created a new DataFrame
@@ -36,12 +37,14 @@ class SARSA:
     # set the number of iterations
     episodes = 5000
     for episode in range(episodes):
-      if(episode % 100 == 0): print(str(episode))
+      if(episode % 100 == 0): 
+        print(str(episode))
+        self.Q.to_csv(self.filename)
       start = self.getStartState()
       self.car.updatePosition(start[0], start[1])
-      # creates the current state as a tuple (x, y, xv, yv)
-      state = self.getState(self.car.getPosition())
       for step in range(1000):
+        # creates the current state as a tuple (x, y, xv, yv)
+        state = self.getState(self.car.getPosition())
         # pos = self.car.getPosition()
         # prevVal = self.track.track[pos[0]][pos[1]]
         # self.track.track[pos[0]][pos[1]] = "C"
@@ -120,7 +123,7 @@ class SARSA:
     # line was reached
     finished = self.moveCar()
     reward = 0
-    if finished == 0:
+    if finished:
       reward = 1
     else: reward = 0
 
