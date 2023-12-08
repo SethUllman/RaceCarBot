@@ -35,32 +35,30 @@ class QLearning:
   def q_learning(self):  
 
     # set the number of iterations
-    episodes = 5000
+    episodes = 1000
     for episode in range(episodes):
       if(episode % 100 == 0): 
-        print(str(episode/100) + "/" + str(episodes/100))
-        self.Q.to_csv(self.filename)
+        self.Q.to_csv("./QLearningTables/" + self.filename)
+      if(episode % 10 == 0):
+        print(str(episode/10) + "/" + str(episodes/10))
       start = self.getStartState()
       self.car.updatePosition(start[0], start[1])
       state = self.getState(self.car.getPosition())
-      for step in range(1000):
+      for step in range(50):
         # creates the current state as a tuple (x, y, xv, yv)
         state = self.getState(self.car.getPosition())
-        # pos = self.car.getPosition()
-        # prevVal = self.track.track[pos[0]][pos[1]]
-        # self.track.track[pos[0]][pos[1]] = "C"
-        # print(self.track)
-        # self.track.track[pos[0]][pos[1]] = prevVal
         # choose and perform an action, then find values needed for Q-Table update
         action = self.getAction(state)
+        if isinstance(action, str):
+          action = eval(action)
         nextState, reward = self.takeAction(state, action)
         bestNextAction = self.Q.loc[[nextState]].idxmax(axis=1).values[0]
-        currentQValue = self.Q.loc[[state], [action]].values[0][0]
+        currentQValue = self.Q.loc[[state], [str(action)]].values[0][0]
         nextQValue = self.Q.loc[[nextState], [bestNextAction]].values[0][0]
 
         # update Q-Table
         newQValue = (1 - self.alpha) * currentQValue + self.alpha * (reward + self.y * nextQValue)
-        self.Q.loc[[state], [action]] = newQValue
+        self.Q.loc[[state], [str(action)]] = newQValue
 
     return self.Q
 

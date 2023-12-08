@@ -9,11 +9,14 @@ from SARSA import SARSA
 # ---------------- Agent ----------------
 class Agent:
 
-    def __init__(self, filename):
+    def __init__(self, filename, memory = None):
         self.car = Car()
         self.track = Track()
         self.track.parseTrack(filename)
-        self.memory = pd.DataFrame()
+        if memory is None:
+            self.memory = pd.DataFrame()
+        else:
+            self.memory = pd.read_csv(memory)
 
     def valueIteration(self, bellmanError, discount):
         VI = ValueIteration(self.car, self.track, self.memory)
@@ -22,17 +25,11 @@ class Agent:
         print("done " + str(bellmanError) + ' ' +str(discount))
 
 
-    def qLearning(self, filename):
-        # table = pd.read_csv('q_table_L1_min.csv')
-        
-        QL = QLearning(self.car, self.track, 0.1, 0.9, 0.3, filename)
-        # QL.drive()
-        qtable = QL.q_learning()
-        return qtable
-
+    def qLearning(self, filename):        
+        QL = QLearning(self.car, self.track, 0.1, 0.9, 0.3, filename, self.memory)
+        QL.q_learning()
 
 
     def sarsa(self, filename):
-        S = SARSA(self.car, self.track, 0.1, 0.9, 0.3, filename)
-        qtable = S.sarsa()
-        return qtable
+        S = SARSA(self.car, self.track, 0.1, 0.9, 0.3, filename, self.memory)
+        S.sarsa()
