@@ -151,7 +151,7 @@ class QLearning:
         return True
         
       # if a wall is hit, update position and velocity
-      if self.track.getCell(pos[0], pos[1]) == "#" and self.filename == "QL_R_Hard":
+      if self.track.getCell(pos[0], pos[1]) == "#" and self.filename == "QL_R_Hard.csv":
         start = random.choice(self.track.startPos)
         self.car.updatePosition(start[0], start[1])
         self.car.updateVelocity(0, 0)
