@@ -19,11 +19,12 @@ class Agent:
         else:
             self.memory = pd.read_csv(memory)
 
-    def valueIteration(self, bellmanError, discount):
-        VI = ValueIteration(self.car, self.track, self.memory)
-        valuesTable = VI.value_iteration(bellmanError, discount)
-        valuesTable.to_csv('./values_tables/W_tables/values_table_W_' + str(bellmanError) + '_' + str(discount) + '.csv')
-        print("done " + str(bellmanError) + ' ' +str(discount))
+    def valueIteration(self, bellmanError, discount, reset):
+        VI = ValueIteration(self.car, self.track, self.memory, reset)
+        valuesTable = VI.value_iteration(bellmanError, discount)    # run Value Iteration
+        valuesTable.to_csv('./values_tables/O_tables/values_table_O_' + str(bellmanError) + '_' + str(discount) + '.csv') # save values table to csv file
+        print("done " + str(bellmanError) + ' ' + str(discount))
+        VI.bestStart() # find best policy/path
 
 
     def qLearning(self, filename):        
