@@ -151,6 +151,11 @@ class SARSA:
         return True
         
       # if a wall is hit, update position and velocity
+      if self.track.getCell(pos[0], pos[1]) == "#" and self.filename == "QL_R_Hard":
+        start = random.choice(self.track.startPos)
+        self.car.updatePosition(start[0], start[1])
+        self.car.updateVelocity(0, 0)
+        
       if self.track.getCell(pos[0], pos[1]) == "#":
         self.car.updatePosition(previous[0], previous[1])
         self.car.updateVelocity(0, 0)

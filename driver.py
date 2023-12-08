@@ -113,6 +113,51 @@ while True:
   qlearner = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R.csv")
   qlearner.qLearning("QL_R.csv")
 
+  # Train Track R
+  print("Training R-1 Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-1.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
+  print("Training R-2 Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-2.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
+  print("Training R-3 Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-3.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
+  print("Training R-4 Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-4.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
+  print("Training R-5 Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-5.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
+  print("Training R-6 Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-6.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
+  print("Training R-7 Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-7.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
+  print("Training R-8 Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-8.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
+  print("Training R-9 Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-9.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
+  print("Training R-10 Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-10.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
+  print("Training R-full Hard")
+  qlearner = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
+  qlearner.qLearning("QL_R_Hard.csv")
+
   # Train Track W
   print("Training W-1")
   qlearner = Agent("./tracks/W-Track/W-track-1.txt", "./QLearningTables/QL_W.csv")
@@ -246,6 +291,51 @@ while True:
   print("Training R-full")
   sarsaLearner = Agent("./tracks/R-Track/R-track-full.txt", "./SarsaTables/SARSA_R.csv")
   sarsaLearner.sarsa("SARSA_R.csv")
+
+  # Train Track R
+  print("Training R-1 Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-1.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
+
+  print("Training R-2 Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-2.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
+
+  print("Training R-3 Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-3.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
+
+  print("Training R-4 Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-4.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
+
+  print("Training R-5 Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-5.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
+
+  print("Training R-6 Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-6.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
+
+  print("Training R-7 Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-7.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
+
+  print("Training R-8 Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-8.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
+
+  print("Training R-9 Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-9.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
+
+  print("Training R-10 Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-10.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
+
+  print("Training R-full Hard")
+  sarsaLearner = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
+  sarsaLearner.sarsa("QL_R_Hard.csv")
 
   # Train Track W
   print("Training W-1")
