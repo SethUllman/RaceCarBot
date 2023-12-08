@@ -103,7 +103,7 @@ class ValueIteration:
             print("Count: ",count)
 
             # write table values
-            self.values.to_csv('./values_tables/R_tables/values_table_RR_' + str(bellmanError) + '_' + str(discount) + '.csv')
+            self.values.to_csv('./values_tables/O_tables/values_table_O_' + str(bellmanError) + '_' + str(discount) + '.csv')
 
         return self.values
 

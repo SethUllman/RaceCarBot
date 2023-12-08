@@ -21,7 +21,7 @@ class Agent:
     def valueIteration(self, bellmanError, discount, reset):
         VI = ValueIteration(self.car, self.track, self.memory, reset)
         valuesTable = VI.value_iteration(bellmanError, discount)    # run Value Iteration
-        valuesTable.to_csv('./values_tables/R_tables/values_table_RR_' + str(bellmanError) + '_' + str(discount) + '.csv') # save values table to csv file
+        valuesTable.to_csv('./values_tables/O_tables/values_table_O_' + str(bellmanError) + '_' + str(discount) + '.csv') # save values table to csv file
         print("done " + str(bellmanError) + ' ' + str(discount))
         VI.bestStart() # find best policy/path
 
