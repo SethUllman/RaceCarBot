@@ -52,7 +52,7 @@ class Agent:
             pos = self.car.getPosition()
             originalValue = self.track.track[pos[0]][pos[1]]
             self.track.track[pos[0]][pos[1]] = "C"
-            print(self.track)
+            # print(self.track)
 
             state = self.getState()
             action = self.getAction(state)
@@ -65,7 +65,7 @@ class Agent:
 
         pos = self.car.getPosition()
         self.track.track[pos[0]][pos[1]] = "C"
-        print(self.track)
+        # print(self.track)
         return moves
 
     def takeAction(self, state, action, trackName):
