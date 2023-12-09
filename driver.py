@@ -398,9 +398,9 @@ def tuneVI():
 
 def costResults():
     track = "L"
-    reset = False
-    bellmanErrors = [0.25]#[0.1, 0.15, 0.2, 0.25, 0.3]
-    discounts = [0.95]#[0.8, 0.85, 0.9, 0.95, 1.0]
+    reset = True
+    bellmanErrors = [0.1, 0.15, 0.2, 0.25, 0.3]
+    discounts = [0.8, 0.85, 0.9, 0.95, 1.0]
 
     for bE in bellmanErrors:
         for d in discounts:
