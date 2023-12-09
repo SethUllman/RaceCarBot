@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import random
+import time
 
 class QLearning:
   def __init__(self, car, track, alpha, y, epsilon, filename, memory = None):
@@ -45,6 +46,7 @@ class QLearning:
       self.car.updatePosition(start[0], start[1])
       state = self.getState(self.car.getPosition())
       for step in range(50):
+        time.sleep(0.2)
         # creates the current state as a tuple (x, y, xv, yv)
         state = self.getState(self.car.getPosition())
         # choose and perform an action, then find values needed for Q-Table update
@@ -58,7 +60,16 @@ class QLearning:
 
         # update Q-Table
         newQValue = (1 - self.alpha) * currentQValue + self.alpha * (reward + self.y * nextQValue)
+        # #----------------------------------------------- Show Q-Value Updates
+        print("best action: " + str(self.Q.loc[[state]].idxmax(axis=1).values[0]))
+        print("chosen action: " + str(action))
+        print("current value:")
+        print(str(self.Q.loc[[state], [str(action)]]))
+        # #-----------------------------------------------
         self.Q.loc[[state], [str(action)]] = newQValue
+        print("updated value:")
+        print(str(self.Q.loc[[state], [str(action)]]))
+        breakpoint()
 
     return self.Q
 
@@ -109,7 +120,11 @@ class QLearning:
   
   # exacutes the found action
   def takeAction(self, state, action):
-
+    pos = self.car.getPosition()
+    originalValue = self.track.track[pos[0]][pos[1]]
+    self.track.track[pos[0]][pos[1]] = "C"
+    print(self.track)
+    print("Training QLearning on R w/ Reset")
     # actions fails with a probability of 0.2
     if np.random.rand() <= 0.2:
       action = (0, 0)
@@ -125,6 +140,7 @@ class QLearning:
     if finished:
       reward = 1
     else: reward = 0
+    self.track.track[pos[0]][pos[1]] = originalValue
 
     # create a new state tuple
     pos = self.car.getPosition()

@@ -2,45 +2,76 @@ import pandas as pd
 import ast
 from Agent import Agent
 
-# Sample data
-data = {
-    'Algorithm': [],
-    'Track': [],
-    'Number_of_Moves': []
-}
+# # Sample data
+# data = {
+#     'Algorithm': [],
+#     'Track': [],
+#     'Number_of_Moves': []
+# }
 
 
-#--------------Q Driver--------------
+# #--------------Q Driver--------------
 
-qdriver = Agent("./tracks/L-Track/L-track-full.txt", "./QLearningTables/QL_L.csv")
-moves = qdriver.drive("QL_L.csv")
-data['Algorithm'].append("Q-Learning")
-data['Track'].append("L")
-data['Number_of_Moves'].append(moves)
+# qdriver = Agent("./tracks/L-Track/L-track-full.txt", "./QLearningTables/QL_L.csv")
+# moves = qdriver.drive("QL_L.csv")
+# data['Algorithm'].append("Q-Learning")
+# data['Track'].append("L")
+# data['Number_of_Moves'].append(moves)
 
-qdriver = Agent("./tracks/O-Track/O-track-full.txt", "./QLearningTables/QL_O.csv")
-moves = qdriver.drive("QL_O.csv")
-data['Algorithm'].append("Q-Learning")
-data['Track'].append("O")
-data['Number_of_Moves'].append(moves)
+# qdriver = Agent("./tracks/O-Track/O-track-full.txt", "./QLearningTables/QL_O.csv")
+# moves = qdriver.drive("QL_O.csv")
+# data['Algorithm'].append("Q-Learning")
+# data['Track'].append("O")
+# data['Number_of_Moves'].append(moves)
 
-qdriver = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R.csv")
-moves = qdriver.drive("QL_R.csv")
-data['Algorithm'].append("Q-Learning")
-data['Track'].append("R")
-data['Number_of_Moves'].append(moves)
+# qdriver = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R.csv")
+# moves = qdriver.drive("QL_R.csv")
+# data['Algorithm'].append("Q-Learning")
+# data['Track'].append("R")
+# data['Number_of_Moves'].append(moves)
 
-qdriver = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
-moves = qdriver.drive("QL_R_Hard.csv")
-data['Algorithm'].append("Q-Learning")
-data['Track'].append("R_Hard")
-data['Number_of_Moves'].append(moves)
+# -----------EXAMPLES---------
 
-qdriver = Agent("./tracks/W-Track/W-track-full.txt", "./QLearningTables/QL_W.csv")
-moves = qdriver.drive("QL_W.csv")
-data['Algorithm'].append("Q-Learning")
-data['Track'].append("W")
-data['Number_of_Moves'].append(moves)
+
+
+
+
+# qdriver = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
+# moves = qdriver.drive("QL_R_Hard.csv")
+
+print("Training R-full Hard")
+qlearner = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
+qlearner.qLearning("QL_R_Hard.csv")
+
+
+# sarsaDriver = Agent("./tracks/R-Track/R-track-full.txt", "./SarsaTables/SARSA_R_Hard.csv")
+# sarsaDriver.drive("SARSA_R_Hard.csv")
+
+# print("Training R-full Hard")
+# sarsaLearner = Agent("./tracks/R-Track/R-track-full.txt", "./SarsaTables/SARSA_R_Hard.csv")
+# sarsaLearner.sarsa("SARSA_R_Hard.csv")
+
+
+
+
+
+
+
+
+
+
+
+
+
+# data['Algorithm'].append("Q-Learning")
+# data['Track'].append("R_Hard")
+# data['Number_of_Moves'].append(moves)
+
+# qdriver = Agent("./tracks/W-Track/W-track-full.txt", "./QLearningTables/QL_W.csv")
+# moves = qdriver.drive("QL_W.csv")
+# data['Algorithm'].append("Q-Learning")
+# data['Track'].append("W")
+# data['Number_of_Moves'].append(moves)
 
 
 # #--------------SARSA Driver--------------
@@ -55,14 +86,14 @@ data['Number_of_Moves'].append(moves)
 # sarsaDriver.drive("SARSA_R.csv")
 
 # sarsaDriver = Agent("./tracks/R-Track/R-track-full.txt", "./SarsaTables/SARSA_R_Hard.csv")
-# sarsaDriver.drive("QL_R_Hard.csv")
+# sarsaDriver.drive("SARSA_R_Hard.csv")
 
 # sarsaDriver = Agent("./tracks/W-Track/W-track-full.txt", "./SarsaTables/SARSA_W.csv")
 # sarsaDriver.drive("SARSA_W.csv")
 
 # Create a DataFrame
-df = pd.DataFrame(data)
-print(df)
+# df = pd.DataFrame(data)
+# print(df)
 
 # # Train Track L
 # print("Training L-1")
@@ -353,17 +384,17 @@ print(df)
 #             values = vIter.valueIteration(bE, d)
 
 # tune Bellman Error and Discount Factor for Value Iteration
-def tuneVI():
-    reset = True
-    bellmanErrors = [0.1, 0.15, 0.2, 0.25, 0.3]
-    discounts = [0.8, 0.85, 0.9, 0.95, 1.0]
+# def tuneVI():
+#     reset = True
+#     bellmanErrors = [0.1, 0.15, 0.2, 0.25, 0.3]
+#     discounts = [0.8, 0.85, 0.9, 0.95, 1.0]
 
-    for bE in bellmanErrors:
-        for d in discounts:
-            vIter = Agent("./tracks/O-Track/O-track-full.txt")
-            values = vIter.valueIteration(bE, d, reset)
+#     for bE in bellmanErrors:
+#         for d in discounts:
+#             vIter = Agent("./tracks/O-Track/O-track-full.txt")
+#             values = vIter.valueIteration(bE, d, reset)
 
-tuneVI()
+# tuneVI()
 
 # def costResults():
 #     track = "W"

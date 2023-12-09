@@ -49,6 +49,7 @@ class Agent:
         moves = 0
         finished = False
         while not finished:
+            time.sleep(0.2)
             pos = self.car.getPosition()
             originalValue = self.track.track[pos[0]][pos[1]]
             self.track.track[pos[0]][pos[1]] = "C"
