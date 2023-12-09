@@ -12,11 +12,11 @@ from Agent import Agent
 
 # #--------------Q Driver--------------
 
-# qdriver = Agent("./tracks/L-Track/L-track-full.txt", "./QLearningTables/QL_L.csv")
-# moves = qdriver.drive("QL_L.csv")
-# data['Algorithm'].append("Q-Learning")
-# data['Track'].append("L")
-# data['Number_of_Moves'].append(moves)
+#     # qdriver = Agent("./tracks/L-Track/L-track-full.txt", "./QLearningTables/QL_L.csv")
+#     # moves = qdriver.drive("QL_L.csv")
+#     # data['Algorithm'].append("Q-Learning")
+#     # data['Track'].append("L")
+#     # data['Number_of_Moves'].append(moves)
 
 # qdriver = Agent("./tracks/O-Track/O-track-full.txt", "./QLearningTables/QL_O.csv")
 # moves = qdriver.drive("QL_O.csv")
@@ -74,7 +74,7 @@ qlearner.qLearning("QL_R_Hard.csv")
 # data['Number_of_Moves'].append(moves)
 
 
-# #--------------SARSA Driver--------------
+# # #--------------SARSA Driver--------------
 
 # sarsaDriver = Agent("./tracks/L-Track/L-track-full.txt", "./SarsaTables/SARSA_L.csv")
 # sarsaDriver.drive("SARSA_L.csv")
@@ -384,10 +384,10 @@ qlearner.qLearning("QL_R_Hard.csv")
 #             values = vIter.valueIteration(bE, d)
 
 # tune Bellman Error and Discount Factor for Value Iteration
-# def tuneVI():
-#     reset = True
-#     bellmanErrors = [0.1, 0.15, 0.2, 0.25, 0.3]
-#     discounts = [0.8, 0.85, 0.9, 0.95, 1.0]
+def tuneVI():
+    reset = False
+    bellmanErrors = [0.3]#[0.1, 0.15, 0.2, 0.25, 0.3]
+    discounts = [0.8]#[0.8, 0.85, 0.9, 0.95, 1.0]
 
 #     for bE in bellmanErrors:
 #         for d in discounts:
@@ -396,18 +396,18 @@ qlearner.qLearning("QL_R_Hard.csv")
 
 # tuneVI()
 
-# def costResults():
-#     track = "W"
-#     reset = False
-#     bellmanErrors = [0.1, 0.2, 0.3, 0.4, 0.5]
-#     discounts = [0.8, 0.85, 0.9, 0.95, 1.0]
-#     vIter = Agent('./tracks/' + track + '-Track/' + track + '-track-full.txt')
+def costResults():
+    track = "L"
+    reset = False
+    bellmanErrors = [0.25]#[0.1, 0.15, 0.2, 0.25, 0.3]
+    discounts = [0.95]#[0.8, 0.85, 0.9, 0.95, 1.0]
 
-#     for bE in bellmanErrors:
-#         for d in discounts:
-#             df_VI = pd.read_csv('./values_tables/' + track + '_tables/values_table_' + track + '_' + str(bE) + '_' + str(d) + '.csv')
-#             print(track + "-Track Best Policy with Bellman Error=" + str(bE) + " & Discount Factor=" + str(d))
-#             vIter.memory = df_VI
-#             vIter.valueIteration(bE, d, reset)
+    for bE in bellmanErrors:
+        for d in discounts:
+            vIter = Agent('./tracks/' + track + '-Track/' + track + '-track-full.txt')
+            df_VI = pd.read_csv('./values_tables/' + track + '_tables/values_table_' + track + '_' + str(bE) + '_' + str(d) + '.csv')
+            print(track + "-Track Best Policy with Bellman Error=" + str(bE) + " & Discount Factor=" + str(d))
+            vIter.memory = df_VI
+            vIter.valueIteration(bE, d, reset)
 
-# tuneVI()
+# costResults()
