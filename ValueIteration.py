@@ -163,19 +163,19 @@ class ValueIteration:
             
             # if the position is part of the wall
             elif self.track.getCell(pt[0], pt[1]) == '#':
-                print("Previous Pt: (", state[0], state[1], ")")
+                # print("Previous Pt: (", state[0], state[1], ")")
 
                 # reset car back to the starting line
                 if (self.reset):
                     index = random.randrange(len(self.track.startPos))
                     start_pos = self.track.startPos[index]
-                    print("Restart: (", start_pos[0], start_pos[1], ")")
+                    # print("Restart: (", start_pos[0], start_pos[1], ")")
                     return (start_pos[0], start_pos[1], 0, 0)
                 
                 # set car to the position before hitting the wall at (0,0) velocity
                 else:
                     pt = poss_pts[i-1]
-                    print("Nearest Pt: (", pt[0], pt[1], ")")
+                    # print("Nearest Pt: (", pt[0], pt[1], ")")
                     return (pt[0], pt[1], 0, 0)
 
         next_state = (new_x, new_y, vx, vy)
@@ -226,25 +226,16 @@ class ValueIteration:
         move_count = 1
         actions = self.values.columns.tolist()
 
-        # find best next state until finish line is crossed
+        # find get best action and move along track until finish line is crossed
         while(True):
             bestValue = float('-inf')
             bestAction = (0, 0)
-            prob_bestAction = random.random()
 
-            # take best action
-            if prob_bestAction > 0.5:
+            for action in actions:
 
-                for action in actions:
-
-                    if bestValue < self.values.at[state, action]:
-                        bestValue = self.values.at[state, action]
-                        bestAction = action
-            
-            # take random action
-            else:
-                index_action = random.randrange(len(actions))
-                bestAction = actions[index_action]
+                if bestValue < self.values.at[state, action]:
+                    bestValue = self.values.at[state, action]
+                    bestAction = action
             
             # add best next state action pair to path
             state_action_pairs.append([state, bestAction])
