@@ -39,9 +39,9 @@ from Agent import Agent
 # qdriver = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
 # moves = qdriver.drive("QL_R_Hard.csv")
 
-print("Training R-full Hard")
-qlearner = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
-qlearner.qLearning("QL_R_Hard.csv")
+# print("Training R-full Hard")
+# qlearner = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
+# qlearner.qLearning("QL_R_Hard.csv")
 
 
 # sarsaDriver = Agent("./tracks/R-Track/R-track-full.txt", "./SarsaTables/SARSA_R_Hard.csv")
@@ -375,13 +375,23 @@ qlearner.qLearning("QL_R_Hard.csv")
 # sarsaLearner = Agent("./tracks/W-Track/W-track-full.txt", "./SarsaTables/SARSA_W.csv")
 # sarsaLearner.sarsa("SARSA_W.csv")
 
-#def tuneVI():
-#    bellmanErrors = [0.1, 0.2, 0.3, 0.4, 0.5]
-#    discounts = [0.8, 0.85, 0.9, 0.95, 1.0]
-#    for bE in bellmanErrors:
-#        for d in discounts:
-#             vIter = Agent("./tracks/W-Track/W-track-full.txt")
-#             values = vIter.valueIteration(bE, d)
+
+
+
+# qdriver = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
+# moves = qdriver.drive("QL_R_Hard.csv")
+
+# print("Training R-full Hard")
+# qlearner = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
+# qlearner.qLearning("QL_R_Hard.csv")
+
+
+sarsaDriver = Agent("./tracks/R-Track/R-track-full.txt", "./SarsaTables/SARSA_R_Hard.csv")
+sarsaDriver.drive("SARSA_R_Hard.csv")
+
+print("Training R-full Hard")
+sarsaLearner = Agent("./tracks/R-Track/R-track-full.txt", "./SarsaTables/SARSA_R_Hard.csv")
+sarsaLearner.sarsa("SARSA_R_Hard.csv")
 
 # tune Bellman Error and Discount Factor for Value Iteration
 def tuneVI():
@@ -389,23 +399,24 @@ def tuneVI():
     bellmanErrors = [0.3]#[0.1, 0.15, 0.2, 0.25, 0.3]
     discounts = [0.8]#[0.8, 0.85, 0.9, 0.95, 1.0]
 
-#     for bE in bellmanErrors:
-#         for d in discounts:
-#             vIter = Agent("./tracks/O-Track/O-track-full.txt")
-#             values = vIter.valueIteration(bE, d, reset)
+    for bE in bellmanErrors:
+        for d in discounts:
+            vIter = Agent("./tracks/L-Track/L-track-full.txt")
+            values = vIter.valueIteration(bE, d, reset)
 
 # tuneVI()
 
+
 def costResults():
-    track = "L"
-    reset = False
+    track = "R"
+    reset = True
     bellmanErrors = [0.25]#[0.1, 0.15, 0.2, 0.25, 0.3]
     discounts = [0.95]#[0.8, 0.85, 0.9, 0.95, 1.0]
 
     for bE in bellmanErrors:
         for d in discounts:
             vIter = Agent('./tracks/' + track + '-Track/' + track + '-track-full.txt')
-            df_VI = pd.read_csv('./values_tables/' + track + '_tables/values_table_' + track + '_' + str(bE) + '_' + str(d) + '.csv')
+            df_VI = pd.read_csv('./values_tables/' + track + '_tables/values_table_' + track + 'R_' + str(bE) + '_' + str(d) + '.csv')
             print(track + "-Track Best Policy with Bellman Error=" + str(bE) + " & Discount Factor=" + str(d))
             vIter.memory = df_VI
             vIter.valueIteration(bE, d, reset)

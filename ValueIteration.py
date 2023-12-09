@@ -24,6 +24,7 @@ class ValueIteration:
             labels = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 0), (0, 1), (1, -1), (1, 0), (1, 1)] # acceleration actions
             self.values = pd.DataFrame(index=indexTuples, columns=labels, dtype=float)
             self.values.fillna(float('-1.0'), inplace=True)
+            self.values.to_csv('./values_tables/L_tables/values_table_L_start_.csv')
 
     # store track positions on the finish line
     def setFinishLine(self):
@@ -103,7 +104,8 @@ class ValueIteration:
             print("Count: ",count)
 
             # write table values
-            self.values.to_csv('./values_tables/O_tables/values_table_O_' + str(bellmanError) + '_' + str(discount) + '.csv')
+            self.values.to_csv('./values_tables/L_tables/values_table_L_' + str(bellmanError) + '_' + str(discount) + '.csv')
+            breakpoint()
 
         return self.values
 
@@ -148,6 +150,8 @@ class ValueIteration:
 
         # list of pts on the path to the next state
         poss_pts = self.track.detectWall(state[0], state[1], new_x, new_y)
+
+        print("Possible Pts:", poss_pts)
         for i in range(len(poss_pts)):
             pt = poss_pts[i]
             x = pt[0]
@@ -259,6 +263,7 @@ class ValueIteration:
                 state = best_next_state
                 move_count += 1
 
+    # print path of travel from car
     def printPath(self, state_action_pairs):
         for state_action in state_action_pairs:
             state, action = state_action

@@ -22,7 +22,7 @@ class Agent:
     def valueIteration(self, bellmanError, discount, reset):
         VI = ValueIteration(self.car, self.track, self.memory, reset)
         # valuesTable = VI.value_iteration(bellmanError, discount)    # run Value Iteration
-        # valuesTable.to_csv('./values_tables/O_tables/values_table_O_' + str(bellmanError) + '_' + str(discount) + '.csv') # save values table to csv file
+        # valuesTable.to_csv('./values_tables/L_tables/values_table_L_' + str(bellmanError) + '_' + str(discount) + '.csv') # save values table to csv file
         # print("done " + str(bellmanError) + ' ' + str(discount))
         for i in range(1):
             VI.bestStart() # find best policy/path
@@ -54,7 +54,7 @@ class Agent:
             pos = self.car.getPosition()
             originalValue = self.track.track[pos[0]][pos[1]]
             self.track.track[pos[0]][pos[1]] = "C"
-            # print(self.track)
+            print(self.track)
 
             state = self.getState()
             action = self.getAction(state)
@@ -63,11 +63,10 @@ class Agent:
 
             self.track.track[pos[0]][pos[1]] = originalValue
             moves += 1
-            # time.sleep(0.5)
 
         pos = self.car.getPosition()
         self.track.track[pos[0]][pos[1]] = "C"
-        # print(self.track)
+        print(self.track)
         return moves
 
     def takeAction(self, state, action, trackName):

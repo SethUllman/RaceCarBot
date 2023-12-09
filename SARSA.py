@@ -61,15 +61,15 @@ class SARSA:
         # update Q-Table
         newQValue = currentQValue + (self.alpha * (reward + (self.y * nextQValue) - currentQValue))
         #----------------------------------------------- Show Q-Value Updates
-        print("best action: " + str(self.Q.loc[[state]].idxmax(axis=1).values[0]))
-        print("chosen action: " + str(action))
-        print("current value:")
-        print(str(self.Q.loc[[state], [str(action)]]))
+        # print("best action: " + str(self.Q.loc[[state]].idxmax(axis=1).values[0]))
+        # print("chosen action: " + str(action))
+        # print("current value:")
+        # print(str(self.Q.loc[[state], [str(action)]]))
         #-----------------------------------------------
         self.Q.loc[[state], [str(action)]] = newQValue
-        print("updated value:")
-        print(str(self.Q.loc[[state], [str(action)]]))
-        breakpoint()
+        # print("updated value:")
+        # print(str(self.Q.loc[[state], [str(action)]]))
+        # breakpoint()
 
     return self.Q
 
