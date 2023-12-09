@@ -1,3 +1,7 @@
+# This file contains the code to train, collect move counts, and demonstrate
+# for the video
+
+
 import pandas as pd
 import ast
 from Agent import Agent
@@ -8,7 +12,6 @@ from Agent import Agent
 #     'Track': [],
 #     'Number_of_Moves': []
 # }
-
 
 # #--------------Q Driver--------------
 
@@ -384,7 +387,6 @@ from Agent import Agent
 # print("Training R-full Hard")
 # qlearner = Agent("./tracks/R-Track/R-track-full.txt", "./QLearningTables/QL_R_Hard.csv")
 # qlearner.qLearning("QL_R_Hard.csv")
-
 
 sarsaDriver = Agent("./tracks/R-Track/R-track-full.txt", "./SarsaTables/SARSA_R_Hard.csv")
 sarsaDriver.drive("SARSA_R_Hard.csv")

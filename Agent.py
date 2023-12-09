@@ -27,16 +27,19 @@ class Agent:
         for i in range(1):
             VI.bestStart() # find best policy/path
 
-
+    # applies the Q-learning algorithm
     def qLearning(self, filename):        
         QL = QLearning(self.car, self.track, 0.1, 0.9, 0.3, filename, self.memory)
         QL.q_learning()
 
-
+    # applies the Sarsa algorithm
     def sarsa(self, filename):
         S = SARSA(self.car, self.track, 0.1, 0.9, 0.3, filename, self.memory)
         S.sarsa()
 
+    # drives the car through the current track
+    # very similar to the documented drive function
+    # in QLearning.py and SARSA.py
     def drive(self, trackName):
         self.memory['Unnamed: 0'] = self.memory['Unnamed: 0'].apply(eval)
         self.memory = self.memory.set_index("Unnamed: 0")
@@ -69,6 +72,7 @@ class Agent:
         print(self.track)
         return moves
 
+    # executes the given action
     def takeAction(self, state, action, trackName):
         action = eval(action)
         # actions fails with a probability of 0.2
@@ -84,6 +88,7 @@ class Agent:
 
         return finished
 
+    # moves the car according to its current velocity
     def moveCar(self, trackName):
 
         # finds the cars target position and creates a list of cells the car
@@ -123,6 +128,7 @@ class Agent:
 
         return False
 
+    # gets and action with the current state
     def getAction(self, state):
         action = self.memory.loc[[state]].idxmax(axis=1).values[0]
         return action
@@ -135,6 +141,7 @@ class Agent:
         integerState = tuple(int(value) for value in state)
         return integerState
 
+    # returns all possible starting states
     def getStartStates(self):
         states = []
         positions = self.track.startPos
@@ -143,6 +150,7 @@ class Agent:
 
         return states
 
+    # finds the maximum values from a list of states
     def getMaxValues(self, states):
         values = []
         for state in states:
