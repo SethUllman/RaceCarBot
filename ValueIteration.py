@@ -68,8 +68,17 @@ class ValueIteration:
                         self.values.at[state, action] = float('-inf')
                         continue
 
+                    # non-deterministic
+                    # prob = random.random()
+                    if state[2] == 0 and state[3] == 0:
+                        # self.car.updateAcceleration(action[0], action[1])   # 80% chance of accelerating 
+                        prob = 0.2
+                    else:
+                        # self.car.updateAcceleration(0,0)                    # 20% chance of not accelerating 
+                        prob = 0.8
+
                     # Bellman equation
-                    value = self.reward(state, action) + discount*self.bestValue(self.getNextState(state, action, policy=False))
+                    value = prob*(self.reward(state, action) + discount*self.bestValue(self.getNextState(state, action)))
                     self.values.at[state, action] = value
                     
                     # update value if its better (car is on its way to the finish line)
@@ -117,7 +126,7 @@ class ValueIteration:
             return 0.0  
         
         # Calculate the next state after taking the action
-        next_state = self.getNextState(state, action, policy=False)
+        next_state = self.getNextState(state, action)
         
         # Check if the next state crosses the finish line
         if [next_state[0], next_state[1]] in self.track.finishPos:
@@ -127,20 +136,17 @@ class ValueIteration:
         return -1.0
         
     # get next state from current state action pair
-    def getNextState(self, state, action, policy):
+    def getNextState(self, state, action):
         # update state
         self.car.updatePosition(state[0], state[1])
         self.car.updateVelocity(state[2], state[3])
 
         # non-deterministic
-        if not policy:
-            prob = random.random()
-            if prob > 0.2:
-                self.car.updateAcceleration(action[0], action[1])   # 80% chance of accelerating 
-            else:
-                self.car.updateAcceleration(0,0)                    # 20% chance of not accelerating 
+        prob = random.random()
+        if prob > 0.2:
+            self.car.updateAcceleration(action[0], action[1])   # 80% chance of accelerating 
         else:
-            self.car.updateAcceleration(action[0], action[1])       # take action (acceleration)
+            self.car.updateAcceleration(0,0)                    # 20% chance of not accelerating
 
         # calculate next state
         self.car.calcVelocity()
@@ -207,13 +213,13 @@ class ValueIteration:
                     bestAction = action
         
         # get best next state after starting position
-        best_next_state = self.getNextState(state, bestAction, policy=True)
+        best_next_state = self.getNextState(state, bestAction)
 
         # get moves and best policy/path to the finish line
         move_count, state_action_pairs = self.bestPolicy(best_next_state, state_action_pairs)
 
         print("Move Count:", move_count)
-        print("Path Taken:", state_action_pairs, "\n")
+        # print("Path Taken:", state_action_pairs, "\n")
 
     # find best policy/path
     def bestPolicy(self, state, state_action_pairs):
@@ -224,16 +230,23 @@ class ValueIteration:
         while(True):
             bestValue = float('-inf')
             bestAction = (0, 0)
+            prob_bestAction = random.random()
 
-            for action in actions:
+            if prob_bestAction > 0.5:
 
-                if bestValue < self.values.at[state, action]:
-                    bestValue = self.values.at[state, action]
-                    bestAction = action
+                for action in actions:
+
+                    if bestValue < self.values.at[state, action]:
+                        bestValue = self.values.at[state, action]
+                        bestAction = action
+            
+            else:
+                index_action = random.randrange(len(actions))
+                bestAction = actions[index_action]
             
             # add best next state action pair to path
-            state_action_pairs.append([state, action])
-            best_next_state = self.getNextState(state, bestAction, policy=True)
+            state_action_pairs.append([state, bestAction])
+            best_next_state = self.getNextState(state, bestAction)
 
             # end if car crosses finish line
             if [best_next_state[0], best_next_state[1]] in self.track.finishPos:
